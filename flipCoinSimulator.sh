@@ -1,17 +1,32 @@
 #! /bin/bash
 
-headCount=0
-tailCount=0
-for(( counter=1; counter<=10; counter++ ))
+heads=0
+tails=0
+while [ true ]
 do
         num=$(( RANDOM ))
         if [ $(( num % 2)) -eq 0 ]
         then
-                (( headCount++ ))
+                heads=$(( heads + 1 ))
         else
-                (( tailCount++ ))
+                tails=$(( tails + 1 ))
+        fi
+        if [ $heads -ge 21 ] && [ $tails -ge 21 ]
+        then
+                break
         fi
 done
-echo "Heads has won $headCount times"
-echo "Tails has won $tailCount times"
+
+if [ $heads -eq $tails ]
+then
+        echo "Its a tie"
+elif [ $heads -gt $tails ]
+then
+        diff=$((heads-tails))
+        echo "Heads wins by $diff amount"
+else
+        diff=$((tails-heads))
+        echo "Tails wins by $diff amount"
+fi
+
 
